@@ -62,6 +62,6 @@ export default function Interface() {
  * 
  */
 async function obtainProjectData() {
-  const data = await fetch('http://localhost:3001/');
+  const data = await fetch('https://personal-back-end.onrender.com');
   return data;
 }
