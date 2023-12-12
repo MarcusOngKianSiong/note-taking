@@ -7,19 +7,42 @@ export default function Interface() {
 
   useEffect(()=>{
     console.log("HELLO");  // Moved here
-
+    
     const data = [];
-    const projects = obtainProjectData();
-
-    projects.then(res => {
+    obtainProjectData().then(res => {
       return res.json();
     }).then(res => {
-        console.log(res)
-        data.push();
-        for (const projectName in res) {
-            data.push(<tr  key={projectName}><Name name={projectName} /><Description description={res[projectName]} /></tr>);
-        }
 
+        /* Example of data received:
+        {
+              "Project": [
+                    "Personal testing framework",
+                    "Shader management tool",
+                    "Basic web scrapping tool",
+                    "Document management tool"
+              ],
+              "Description": [
+                    "Create a simplistic version of jasmine testing framework without all the bells and whistles",
+                    "A tool that assist in modifying existing shader program components in isolation while being able to view the variables in a specific program using commands in the terminal. ",
+                    "A tool to scrape data from html based on specific html patterns",
+                    "A tool that allow you to view all function documentations in a project while ensuring that those documentations are up to date through its structure (1) and correction tools. \n\n1. Format of the documentation, where is the documentation palced, etc. "
+              ],
+              "Link": [
+                    "lala",
+                    null,
+                    null,
+                    null
+              ]
+        }
+        */
+        const length = res.Project.length;
+        for(let i = 0;i<length;i++){
+            data.push(<tr  key={i}><Name name={res.Project[i]} /><Description description={{description: res.Description[i], link: res.Link[i]}}/></tr>)
+        }
+        // for (const projectName in res) {
+        //     data.push(<tr  key={projectName}><Name name={projectName} /><Description description={res[projectName]} /></tr>);
+        // }
+        
         setProjects(
             <table >
                 <thead  key={"Projects"}>
@@ -37,7 +60,6 @@ export default function Interface() {
                 </tbody>    
             </table>
         );
-
     });
 
   }, []);
@@ -62,6 +84,6 @@ export default function Interface() {
  * 
  */
 async function obtainProjectData() {
-  const data = await fetch('https://personal-back-end.onrender.com');
+  const data = await fetch('https://personal-back-end.onrender.com/projects');
   return data;
 }

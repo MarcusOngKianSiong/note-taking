@@ -3,7 +3,7 @@
 
 export default function Description(prop){
 
-    evaluateInputStatus(prop.description);
+    evaluateInputStatus(prop.description, prop.link);
 
     return(
         <th style={{}}>
@@ -21,10 +21,8 @@ function evaluateInputStatus(data){
         throw new Error("Prop.description is not an object.");
         
     }else if(data.description === undefined || data.description.length === 0){
-            throw new Error("Project description is empty");
-        
-    }else if(data.link === undefined || data.link.length <= 1){
-        throw new Error("Project description is empty.");
+            throw new Error("Project description is empty");        
     }
+
 }
 
