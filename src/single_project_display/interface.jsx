@@ -1,18 +1,18 @@
 import Name from './name';
 import Description from './description';
 import { useEffect, useState } from 'react';
+import {Github,ProjectApp,Documentation} from './links';
 
 export default function Interface() {
   const [projects, setProjects] = useState(null);
 
   useEffect(()=>{
     console.log("HELLO");  // Moved here
-    
+
     const data = [];
     obtainProjectData().then(res => {
       return res.json();
     }).then(res => {
-
         /* Example of data received:
         {
               "Project": [
@@ -36,8 +36,17 @@ export default function Interface() {
         }
         */
         const length = res.Project.length;
+        console.log(res)
         for(let i = 0;i<length;i++){
-            data.push(<tr  key={i}><Name name={res.Project[i]} /><Description description={{description: res.Description[i], link: res.Link[i]}}/></tr>)
+            data.push(
+                <tr  key={i} >
+                      <Name name={res.Project[i]} />
+                      <Description description={{description: res.Description[i]}}/>
+                      <Github link={res.Github[i]}/>
+                      <Documentation link={res.Documentation[i]}/>
+                      <ProjectApp link={res.ProjectApp[i]}/>
+                </tr>
+            )
         }
         // for (const projectName in res) {
         //     data.push(<tr  key={projectName}><Name name={projectName} /><Description description={res[projectName]} /></tr>);
@@ -53,9 +62,18 @@ export default function Interface() {
                             <th style={{borderBottom: '1px solid black'}}>
                                 <p>Description</p>
                             </th>
+                            <th style={{borderBottom: '1px solid black'}}>
+                                <p>Source code</p>
+                            </th>
+                            <th style={{borderBottom: '1px solid black'}}>
+                                <p>Documentation</p>
+                            </th>
+                            <th style={{borderBottom: '1px solid black'}}>
+                                <p>Use</p>
+                            </th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody >
                     {data}
                 </tbody>    
             </table>
