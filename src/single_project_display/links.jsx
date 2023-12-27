@@ -17,7 +17,9 @@ function checkIfURL(link){
         if(link.includes(".github.io")){
             return true;
         }
-        if(link.includes(".notion.site"))
+        if(link.includes(".notion.site")){
+            return true;
+        }
         return false;
     }else{
         return false;
